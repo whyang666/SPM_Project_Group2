@@ -78,10 +78,10 @@ public class DwrUtil {
 		try{
 			if(StringUtils.isBlank(userName) ){
 				System.out.println("用户名不可为空，应为10位");
-				return "用户名不可为空";
+				return "账号不可为空";
 			}else if(!isNumeric(userName) || userName.length() != 10){
 				System.out.println("用户名应为10位学号");
-				return "用户名应为10位数字";
+				return "账号应为10位数字";
 			}else{
 				if(userService.findUser(userName) != null){
 					System.out.println("用户已存在，请重新输入");
