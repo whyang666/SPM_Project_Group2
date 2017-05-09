@@ -35,15 +35,25 @@ public class LoginAction extends ActionSupport
 	 */
 	public String login()
 	{
-		LOG.error("username:" + user.getUserName());
+		LOG.error("userID:" + user.getUserId());
 		
 		try
 		{
+            Map session = (Map) ActionContext.getContext().getSession();
+            if (session.get("user")!=null)
+                return "error";
 			User tempuser = new User();
-			tempuser = userService.findUser(user.getUserName(),user.getPassword());
-			
-			Map session = (Map) ActionContext.getContext().getSession();
+			tempuser = userService.findUser(user.getUserId(),user.getPassword());
+			String position;
+			if (tempuser.getPosition().equals("1"))
+				position="管理员";
+			else if (tempuser.getPosition().equals("2"))
+				position="老师";
+			else
+				position="学生";
+
 			session.put("user", tempuser);
+            session.put("position", position);
 			return SUCCESS;			
 
 			

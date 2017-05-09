@@ -175,7 +175,7 @@
 								帐号：
 							</label>
 							<div class="inputOuter" id="uArea">
-								<input type="text" id="u" name="user.userName" onBlur="loginExistenceCheck();"
+								<input type="text" id="u" name="user.userId" onBlur="loginExistenceCheck();"
 									   class="easyui-textbox" data-options="iconCls:'icon-man'" style="width:200px;height:38px;" />
 							</div>
 						</div>
@@ -183,7 +183,7 @@
 						<div class="UserNameMsg" id="UserNameMsg" style="display:none;color:#F00">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<label id="labelUserNameMsg" class="text" for="m">
-								用户名应为10位！
+								账号应为10位！
 							</label>
 						</div>
 

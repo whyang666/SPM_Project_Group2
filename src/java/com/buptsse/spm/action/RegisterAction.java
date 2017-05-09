@@ -73,7 +73,7 @@ public class RegisterAction extends ActionSupport {
 		else {
 			LOG.error("开始保存数据");
 			if(user.getPassword().equals(user.getPassword1())){
-				user.setUserId(user.getUserId());
+//				user.setUserId(user.getUserId());
 				user.setId(user.getUserId());
 				user.setPosition("3");
 				userService.addUser(user);
@@ -85,7 +85,6 @@ public class RegisterAction extends ActionSupport {
 		}
 		try {
 			ServletActionContext.getResponse().getWriter().write(msg);
-		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -29,7 +29,7 @@
 		<!-- 登出 -->
 		<action name="logOut" method="logout" class="LoginAction">
 			<result name="success">/jsp/register.jsp</result>
-			<result name="error">jsp/register.jsp</result>
+			<result name="error">/jsp/register.jsp</result>
 		</action>		
 		
 		<!-- 注册 -->

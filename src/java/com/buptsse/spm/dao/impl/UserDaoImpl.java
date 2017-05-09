@@ -65,7 +65,7 @@ public class UserDaoImpl extends BaseDAOImpl<User> implements IUserDao {
 			List<User> list = new ArrayList<User>();
 			list = super.find("from User");
 			for(int i = 0;i < list.size();i++){
-				if(user.getUserName().equals(list.get(i).getUserName())){
+				if(user.getUserId().equals(list.get(i).getUserId())){
 					return list.get(i);
 			}
 		}			
