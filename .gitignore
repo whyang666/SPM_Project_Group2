@@ -1,4 +1,11 @@
 .idea/dataSources.local.xml
 .idea/workspace.xml
 WebRoot/WEB-INF/classes/*
-/SPM_Project.iml
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
