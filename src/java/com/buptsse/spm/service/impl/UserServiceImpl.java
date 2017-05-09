@@ -48,11 +48,11 @@ public class UserServiceImpl implements IUserService {
 		}
 	}
 	
-	public User findUser(String userName){
+	public User findUser(String userId){
 		User user = new User();
-		user.setUserName(userName);
-		user.setId(userName);
-		user = iUserDao.findUser(user);
+//		user.setUserName(userName);
+		user.setId(userId);
+		user = iUserDao.findUserById(userId);
 		if(user == null){
 			return null;
 		}else{
