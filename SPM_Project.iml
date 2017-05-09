@@ -95,7 +95,11 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
+<<<<<<< HEAD
           <unit-entry name="hibernate.cfg.xml" />
+=======
+          <unit-entry name="hibernate.cfg.xml" value="78c6974b-f410-4263-ba64-bb7b12f86383" />
+>>>>>>> 03b41502659e5f3528ef8972b91bcc2d97c0a6cc
           <unit-entry name="sessionFactory" value="dataSource" />
         </datasource-map>
         <naming-strategy-map />
@@ -131,6 +135,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/resource" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

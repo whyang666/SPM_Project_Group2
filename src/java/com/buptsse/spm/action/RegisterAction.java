@@ -8,6 +8,7 @@ import com.buptsse.spm.domain.Code;
 import com.buptsse.spm.domain.User;
 import com.buptsse.spm.service.ICodeService;
 import com.buptsse.spm.service.IUserService;
+import com.buptsse.spm.util.DwrUtil;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
@@ -46,26 +47,38 @@ public class RegisterAction extends ActionSupport {
 	 */
 	public String register() {
 		String msg="";
-		LOG.error("username:" + user.getUserName());// 没有去check用户是否为空
-		if (user == null){
+		LOG.error("userid:" + user.getUserId());// 没有去check用户是否为空
+        DwrUtil dwrUtil = new DwrUtil();
+        if (user == null){
 			LOG.error("USER对象为空！");
 		}
 		if (StringUtils.isBlank(user.getUserName())) {
 			msg = "用户名未输入,请输入用户名！";
-		} else if (StringUtils.isBlank(user.getPassword())) {
+		}
+		else if (StringUtils.isBlank(user.getUserId())){
+            msg = "账号未输入,请输入账号！";
+        }
+        else if(userService.findUser(user.getUserId()) != null){
+		    msg="该账号已存在！";
+        }
+		else if (StringUtils.isBlank(user.getPassword())) {
 			msg = "密码未输入,请输入密码！";
-		} else if (StringUtils.isBlank(user.getEmail())) {
+		}
+		else if(!(user.getPassword().matches("^[a-zA-Z0-9]{6,16}$"))){
+			msg="密码格式不符合要求！";
+		}
+		else if (StringUtils.isBlank(user.getEmail())) {
 			msg = "邮箱未输入,请输入邮箱！";
-		} else {
+		}
+		else {
 			LOG.error("开始保存数据");
 			if(user.getPassword().equals(user.getPassword1())){
-				user.setUserId(user.getUserName());
-				user.setId(user.getUserName());
+				user.setUserId(user.getUserId());
+				user.setId(user.getUserId());
 				user.setPosition("3");
 				userService.addUser(user);
 				msg = "恭喜您，注册成功！";
 				LOG.error("保存数据");
-				//ServletActionContext.getRequest().setAttribute("registerMsg", "注册成功！");
 			}else{
 				msg = "对不起，两次输入的密码不一致，请重新输入！";
 			}

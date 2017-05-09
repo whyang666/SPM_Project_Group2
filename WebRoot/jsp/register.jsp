@@ -15,9 +15,9 @@
 <head>
 	<title>"教育部-IBM精品课程建设项目”软件项目管理课程</title>
 	<!-- 		插入外部样式表，使用DwrUtil -->
-	<script type="text/javascript" src="./dwr/util.js"></script>
-	<script type="text/javascript" src="./dwr/engine.js"></script>
-	<script type="text/javascript" src="./dwr/interface/dwrUtil.js"></script>
+	<script type="text/javascript" src="dwr/util.js"></script>
+	<script type="text/javascript" src="dwr/engine.js"></script>
+	<script type="text/javascript" src="dwr/interface/dwrUtil.js"></script>
 	<script type="text/javascript">
         function register(){
 			/*			var registerUserName = document.getElementById("user");
@@ -36,13 +36,12 @@
 
             $('#registFm').form('submit',{
                 url: "${ctx}/registerAction.do",
+//                url: "action/RegisterAction.do",
                 success: function(result){
                     $("#msgRegist").html(result);
                     $('#registFm').form('clear');
                 }
             });
-
-
         }
 
 
@@ -81,7 +80,24 @@
             }
         }
 
-        function registerExtenceCheck(){
+        function registerExtenceCheck1(){
+            var loginUserName = document.getElementById("username");
+            if (loginUserName.value.length==0)
+                document.getElementById('RegisteridNameMsg').style.display = "block";
+            else
+                document.getElementById('RegisteridNameMsg').style.display="none";
+//            dwrUtil.extenceCheck(loginUserName.value,callback1);
+//            function callback1(result1){
+//                if(result1 == "unExtence"){
+//                    document.getElementById('RegisteridNameMsg').style.display="none";
+//                }else {
+////                    var msg = document.getElementById("labelUserNameMsg0");
+//                    document.getElementById('RegisteridNameMsg').style.display = "block";
+//                }
+//            }
+        }
+
+        function registerExtenceCheck2(){
             var loginUserName = document.getElementById("user");
             dwrUtil.extenceCheck(loginUserName.value,callback);
             function callback(result){
@@ -90,7 +106,7 @@
                 }else{
                     var msg = document.getElementById("labelUserNameMsg1");
                     if(result == "extence"){
-                        msg.innerHTML = "用户名已存在";
+                        msg.innerHTML = "账号已存在";
                     }else {
                         msg.innerHTML = result;
                     }
@@ -103,9 +119,10 @@
             var password = document.getElementById("passwd");
             var length = password.value.length;
             var passwordMsg = document.getElementById("PasswordMsg");
-            if(length < 6 || length > 16){
+            if(length < 6 || length > 16||!(password.matches("^[a-zA-Z0-9]{6,16}$"))) {
                 passwordMsg.style.display = "block";
-            }else{
+            }
+            else{
                 passwordMsg.style.display = "none";
             }
         }
@@ -213,15 +230,33 @@
 	<div class="qlogin" id="qlogin" style="display: none;">
 		<form id="registFm" action="" method="post">
 			<div class="web_login">
-
 				<ul class="reg_form" id="reg-ul">
+                    <li>
+                        <label class="input-tips2">
+                            用户名：
+                        </label>
+                        <div class="inputOuter2">
+                            <input type="text" id="username" maxlength="10" name="user.userName" onBlur="registerExtenceCheck1();"
+                                   class="inputstyle2" />
+                        </div>
+
+                        <br>
+                        <br>
+                    </li>
+
+                    <div class="RegisterName" id="RegisteridNameMsg" style="display:none;color:#F00">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label id="labelUserNameMsg0" class="text" for="m">
+                            用户名不能为空！
+                        </label>
+                    </div>
 
 					<li>
 						<label class="input-tips2">
-							用户名：
+							学/工号：
 						</label>
 						<div class="inputOuter2">
-							<input type="text" id="user" maxlength="10" name="user.userName" onBlur="registerExtenceCheck();"
+							<input type="text" id="user" maxlength="10" name="user.userId" onBlur="registerExtenceCheck2();"
 								   class="inputstyle2" />
 						</div>
 
@@ -232,7 +267,7 @@
 					<div class="RegisterName" id="RegisterNameMsg" style="display:none;color:#F00">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<label id="labelUserNameMsg1" class="text" for="m">
-							用户名应为10位！
+                            学号/工号应为10位！
 						</label>
 					</div>
 
@@ -251,7 +286,7 @@
 					<div class="PasswordMsg" id="PasswordMsg" style="display:none;color:#F00">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<label class="text" for="pm">
-							密码必须为6位以上，16位以下！
+							密码不符合要求！
 						</label>
 					</div>
 
