@@ -1,29 +1,25 @@
 package com.buptsse.spm.action;
 
+import com.alibaba.fastjson.JSONObject;
+import com.buptsse.spm.domain.Exam;
+import com.buptsse.spm.service.IExamService;
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.apache.struts2.ServletActionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
-import com.alibaba.fastjson.JSONObject;
-import com.buptsse.spm.domain.Exam;
-import com.buptsse.spm.service.IExamService;
-
-import com.opensymphony.xwork2.ActionSupport;
-
 
 /**
  * @author BUPT-TC
  * @date 2015年11月20日 下午4:17
- * @description 选课的service层接口定义 
+ * @description 选课的service层接口定义??? 喵喵喵？
  * @modify BUPT-TC
  * @modifyDate 
  */
@@ -39,6 +35,12 @@ public class ExamAction extends ActionSupport{
 	String[] result=new String[10];
 	int rightNumber=0 ;
 	int score=0;
+
+
+	/**
+	 * 根据上传的Jsom文件解析题目
+	 */
+
 
 	/**
 	 * 查询所有网上测试列表
@@ -185,9 +187,13 @@ public class ExamAction extends ActionSupport{
 		}	
 		
 		return null;
-	}		
-	
-	
+	}
+
+
+	/**
+	 * getter&setter
+	 * @return ?
+	 */
 	public IExamService getExamService() {
 		return examService;
 	}
