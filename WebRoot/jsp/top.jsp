@@ -231,7 +231,7 @@ body {
 					<a href="${pageContext.request.contextPath}/enterintro.do?name=lianxiwomen" target="right">联系我们</a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath}/logOut.do" target="123">登录入口</a>
+					<a href="${pageContext.request.contextPath}/logOut.do" target="123">退出登录</a>
 				</li>
 				
 				<c:if test="${session.user.position=='1'}">
