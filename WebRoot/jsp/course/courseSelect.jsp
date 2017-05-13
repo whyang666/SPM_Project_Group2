@@ -30,7 +30,8 @@
             $('#dataList')[0].style.display = "";
             $('#dg').datagrid({
                 url: "${ctx}/courseQuery.do",
-                queryParams: {stdId: studentId}, //传参
+                //queryParams: {stdId: studentId}, //传参
+                queryParams: {stdId: $('#studentId').val()},
                 onLoadSuccess: function (data) {
                     //alert(data.total);
                     if (data.total > 0) {
@@ -160,9 +161,18 @@
     选课
 </h1>
 
-<form id="ff" method="post">
+<form id="ff" method="post" style="position: relative">
+    <c:if test="${session.user.position=='3' }">
+        <input type="button" id="selectButton" class="btn btn-default" style="margin-right:20px;"
+               onclick="selectCourse()" value="我要选课1"/>
+    </c:if>
     <c:if test="${session.user.position=='1' }">
         您作为管理员，无该功能权限！
+    </c:if>
+
+    <c:if test="${session.user.position=='3' }">
+        <input type="button" id="selectButton" class="btn btn-default" style="margin-right:20px;"
+               onclick="selectCourse()" value="我要选课2"/>
     </c:if>
     <c:if test="${session.user.position=='2' }">
         <table style="background:#efefef; border-collapse:collapse ;" width="100%" height="80" cellspacing="5"
@@ -201,14 +211,11 @@
             <input type="button" class="btn btn-default" style="margin-right:20px;" onclick="clearForm()" value="重  置"/>
         </div>
     </c:if>
-    <c:if test="${session.user.position=='3' }">
-        <input type="button" id="selectButton" class="btn btn-default" style="margin-right:20px;"
-               onclick="selectCourse()" value="我要选课"/>
-    </c:if>
+
 </form>
 
 
-<div id="dataList" style="display:none;">
+<div id="dataList" style="display:none; position: relative">
     <table id="dg" class="easyui-datagrid" width="100%"
            toolbar="#toolbar" pagination="true"
            rownumbers="true" fitColumns="true" singleSelect="false"
