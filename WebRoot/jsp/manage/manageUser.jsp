@@ -23,8 +23,8 @@
     $('#dataList')[0].style.display="";
     $('#dg').datagrid({
     url:"${ctx}/listUser.do",
-    queryParams:{userid:$('#userid').val(),
-    			userName:$('#userName').val(),
+    queryParams:{userid:$('#classId').val(),
+    			userName:$('#studentId').val(),
     			position:$('#position').combobox('getValue')} //传参
     });
  }

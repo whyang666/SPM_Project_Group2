@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Service;
 
 import com.buptsse.spm.dao.IUserDao;
@@ -87,8 +89,15 @@ public class UserServiceImpl implements IUserService {
 		// TODO Auto-generated method stub
 		User user = new User();
 		user= iUserDao.findUserById(id);
-		
-		return iUserDao.deleteUser(user);
+		//获取当前用户
+		User test=new User();
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		test =(User) session.getAttribute("user");
+		String sid=test.getId();
+
+		if(sid.equals(id)) return false;//选中自己不能删除
+		else{
+			return iUserDao.deleteUser(user);}
 	}
 
 	/* (non-Javadoc)
