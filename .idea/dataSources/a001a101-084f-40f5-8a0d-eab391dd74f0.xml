@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="spm@hy-wang.com">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.1">
+    <root id="1"/>
+    <schema id="2" parent="1" name="spm">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="dachuang"/>
+    <schema id="4" parent="1" name="DaChuangGaoShi"/>
+    <schema id="5" parent="1" name="DOP1-RUA"/>
+    <schema id="6" parent="1" name="FoodOrderSystem"/>
+    <schema id="7" parent="1" name="information_schema"/>
+    <schema id="8" parent="1" name="jwxt"/>
+    <schema id="9" parent="1" name="mysql"/>
+    <schema id="10" parent="1" name="performance_schema"/>
+    <schema id="11" parent="1" name="struts2"/>
+    <schema id="12" parent="1" name="webchat"/>
+    <schema id="13" parent="1" name="xusong"/>
+    <schema id="14" parent="1" name="旅游大创数据"/>
+    <table id="15" parent="2" name="basicinfo"/>
+    <table id="16" parent="2" name="code"/>
+    <table id="17" parent="2" name="configInfo"/>
+    <table id="18" parent="2" name="course"/>
+    <table id="19" parent="2" name="download"/>
+    <table id="20" parent="2" name="exam"/>
+    <table id="21" parent="2" name="fileinfo"/>
+    <table id="22" parent="2" name="message"/>
+    <table id="23" parent="2" name="schedule"/>
+    <table id="24" parent="2" name="sp_chapter"/>
+    <table id="25" parent="2" name="sp_chapter_video"/>
+    <table id="26" parent="2" name="teachingplan"/>
+    <table id="27" parent="2" name="tradeinfo"/>
+    <table id="28" parent="2" name="user"/>
+    <column id="29" parent="15" name="idcourseinfo">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="30" parent="15" name="name">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="31" parent="15" name="content">
+      <Position>3</Position>
+      <DataType>varchar(10000)|0</DataType>
+    </column>
+    <key id="32" parent="15" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idcourseinfo</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="33" parent="16" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="34" parent="16" name="codeType">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="35" parent="16" name="codeCode">
+      <Position>3</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="36" parent="16" name="codeName">
+      <Position>4</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="37" parent="16" name="validate">
+      <Position>5</Position>
+      <DataType>char(1)|0</DataType>
+    </column>
+    <column id="38" parent="16" name="remark">
+      <Position>6</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <key id="39" parent="16" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="40" parent="17" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="41" parent="17" name="configType">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="42" parent="17" name="configCode">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="43" parent="17" name="configValue">
+      <Position>4</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="44" parent="17" name="configDesc">
+      <Position>5</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="45" parent="17" name="validate">
+      <Position>6</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="46" parent="17" name="remark">
+      <Position>7</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <key id="47" parent="17" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="48" parent="18" name="studentId">
+      <Position>1</Position>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="49" parent="18" name="name">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="50" parent="18" name="classId">
+      <Position>3</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="51" parent="18" name="email">
+      <Position>4</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="52" parent="18" name="telno">
+      <Position>5</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="53" parent="18" name="status">
+      <Position>6</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="54" parent="18" name="dailyGrade">
+      <Position>7</Position>
+      <DataType>decimal(5,2)|0</DataType>
+      <DefaultExpression>&apos;0.00&apos;</DefaultExpression>
+    </column>
+    <column id="55" parent="18" name="midGrade">
+      <Position>8</Position>
+      <DataType>decimal(5,2)|0</DataType>
+      <DefaultExpression>&apos;0.00&apos;</DefaultExpression>
+    </column>
+    <column id="56" parent="18" name="finalGrade">
+      <Position>9</Position>
+      <DataType>decimal(5,2)|0</DataType>
+      <DefaultExpression>&apos;0.00&apos;</DefaultExpression>
+    </column>
+    <column id="57" parent="18" name="practiceGrade">
+      <Position>10</Position>
+      <DataType>decimal(5,2)|0</DataType>
+      <DefaultExpression>&apos;0.00&apos;</DefaultExpression>
+    </column>
+    <column id="58" parent="18" name="totalGrade">
+      <Position>11</Position>
+      <DataType>decimal(5,2)|0</DataType>
+      <DefaultExpression>&apos;0.00&apos;</DefaultExpression>
+    </column>
+    <column id="59" parent="18" name="syear">
+      <Position>12</Position>
+      <DataType>char(4)|0</DataType>
+    </column>
+    <key id="60" parent="18" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>studentId
+classId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="61" parent="19" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="62" parent="19" name="title">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="63" parent="19" name="statement">
+      <Position>3</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <column id="64" parent="19" name="filepath">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="65" parent="19" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="66" parent="20" name="examName">
+      <Position>1</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="67" parent="20" name="number">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="68" parent="20" name="question">
+      <Position>3</Position>
+      <DataType>varchar(500)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="69" parent="20" name="answerA">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="70" parent="20" name="answerB">
+      <Position>5</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="71" parent="20" name="answerC">
+      <Position>6</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="72" parent="20" name="answerD">
+      <Position>7</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="73" parent="20" name="answerRight">
+      <Position>8</Position>
+      <DataType>varchar(2)|0</DataType>
+    </column>
+    <key id="74" parent="20" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>examName
+number</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="75" parent="21" name="idfile">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="76" parent="21" name="filePath">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="77" parent="21" name="filename">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <key id="78" parent="21" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idfile</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="79" parent="22" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="80" parent="22" name="name">
+      <Position>2</Position>
+      <DataType>varchar(800)|0</DataType>
+    </column>
+    <column id="81" parent="22" name="title">
+      <Position>3</Position>
+      <DataType>varchar(800)|0</DataType>
+    </column>
+    <column id="82" parent="22" name="detail">
+      <Position>4</Position>
+      <DataType>varchar(800)|0</DataType>
+    </column>
+    <key id="83" parent="22" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="84" parent="23" name="chapter_id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="85" parent="23" name="video_step_order">
+      <Position>2</Position>
+      <DataType>int(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="86" parent="23" name="percent">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="87" parent="23" name="userId">
+      <Position>4</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="88" parent="23" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>userId
+chapter_id
+video_step_order</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="89" parent="24" name="chapter_id">
+      <Position>1</Position>
+      <Comment>id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="90" parent="24" name="chapter_name_number">
+      <Position>2</Position>
+      <Comment>章编号</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="91" parent="24" name="chapter_name">
+      <Position>3</Position>
+      <Comment>章名称</Comment>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <column id="92" parent="24" name="chapter_desc">
+      <Position>4</Position>
+      <Comment>章描述</Comment>
+      <DataType>varchar(256)|0</DataType>
+    </column>
+    <column id="93" parent="24" name="chapter_pic">
+      <Position>5</Position>
+      <Comment>图片路径</Comment>
+      <DataType>varchar(256)|0</DataType>
+    </column>
+    <column id="94" parent="24" name="chapter_courseware">
+      <Position>6</Position>
+      <Comment>课件路径</Comment>
+      <DataType>varchar(256)|0</DataType>
+    </column>
+    <key id="95" parent="24" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>chapter_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="96" parent="25" name="id">
+      <Position>1</Position>
+      <Comment>视频id</Comment>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="97" parent="25" name="chapter_id">
+      <Position>2</Position>
+      <Comment>章编号</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="98" parent="25" name="video_time">
+      <Position>3</Position>
+      <Comment>时长，单位:分钟</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="99" parent="25" name="video_name_number">
+      <Position>4</Position>
+      <Comment>视频小节序号</Comment>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="100" parent="25" name="video_name">
+      <Position>5</Position>
+      <Comment>视频名称</Comment>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="101" parent="25" name="video_desc">
+      <Position>6</Position>
+      <Comment>视频描述</Comment>
+      <DataType>varchar(512)|0</DataType>
+    </column>
+    <column id="102" parent="25" name="video_path">
+      <Position>7</Position>
+      <Comment>视频地址</Comment>
+      <DataType>varchar(512)|0</DataType>
+    </column>
+    <column id="103" parent="25" name="video_pic">
+      <Position>8</Position>
+      <Comment>视频图片地址</Comment>
+      <DataType>varchar(512)|0</DataType>
+    </column>
+    <column id="104" parent="25" name="video_step_order">
+      <Position>9</Position>
+      <Comment>视频顺序，用户学到哪个阶段用这个字段标示</Comment>
+      <DataType>int(32)|0</DataType>
+    </column>
+    <key id="105" parent="25" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="106" parent="26" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="107" parent="26" name="pieceId">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="108" parent="26" name="pieceName">
+      <Position>3</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="109" parent="26" name="chapterId">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="110" parent="26" name="chapterName">
+      <Position>5</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="111" parent="26" name="filepath">
+      <Position>6</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <index id="112" parent="26" name="chapterId_UNIQUE">
+      <ColNames>chapterId</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="113" parent="26" name="chapterName_UNIQUE">
+      <ColNames>chapterName</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="114" parent="26" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="115" parent="26" name="chapterId_UNIQUE">
+      <ColNames>chapterId</ColNames>
+      <UnderlyingIndexName>chapterId_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="116" parent="26" name="chapterName_UNIQUE">
+      <ColNames>chapterName</ColNames>
+      <UnderlyingIndexName>chapterName_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="117" parent="27" name="idtradeinfo">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="118" parent="27" name="title">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="119" parent="27" name="content">
+      <Position>3</Position>
+      <DataType>varchar(2000)|0</DataType>
+    </column>
+    <key id="120" parent="27" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idtradeinfo</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="121" parent="28" name="id">
+      <Position>1</Position>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="122" parent="28" name="userName">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="123" parent="28" name="password">
+      <Position>3</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="124" parent="28" name="position">
+      <Position>4</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="125" parent="28" name="userId">
+      <Position>5</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="126" parent="28" name="videoTime">
+      <Position>6</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="127" parent="28" name="email">
+      <Position>7</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="128" parent="28" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

@@ -70,10 +70,12 @@ public class RegisterAction extends ActionSupport {
 		else if (StringUtils.isBlank(user.getEmail())) {
 			msg = "邮箱未输入,请输入邮箱！";
 		}
+		else if (!user.getEmail().matches("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$")) {
+			msg = "邮箱格式不符合要求！";
+		}
 		else {
 			LOG.error("开始保存数据");
 			if(user.getPassword().equals(user.getPassword1())){
-//				user.setUserId(user.getUserId());
 				user.setId(user.getUserId());
 				user.setPosition("3");
 				userService.addUser(user);

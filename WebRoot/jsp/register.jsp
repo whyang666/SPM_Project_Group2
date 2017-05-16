@@ -86,15 +86,6 @@
                 document.getElementById('RegisteridNameMsg').style.display = "block";
             else
                 document.getElementById('RegisteridNameMsg').style.display="none";
-//            dwrUtil.extenceCheck(loginUserName.value,callback1);
-//            function callback1(result1){
-//                if(result1 == "unExtence"){
-//                    document.getElementById('RegisteridNameMsg').style.display="none";
-//                }else {
-////                    var msg = document.getElementById("labelUserNameMsg0");
-//                    document.getElementById('RegisteridNameMsg').style.display = "block";
-//                }
-//            }
         }
 
         function registerExtenceCheck2(){
@@ -136,6 +127,16 @@
             }else{
                 passwordMsg1.style.display="none";
             }
+        }
+
+        function registerEmailCheck(){
+            var email = document.getElementById("email");
+            if (email.value.length==0)
+                document.getElementById('EmailMsg').style.display = "block";
+            else if(email.matches("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"))
+                document.getElementById('EmailMsg').style.display = "block";
+            else
+                document.getElementById('EmailMsg').style.display="none";
         }
 
 	</script>
@@ -315,13 +316,19 @@
 							邮箱：
 						</label>
 						<div class="inputOuter2">
-							<input type="text" id="email" name="user.email" onBlur="registerExtenceCheck();"
-								   class="inputstyle2" />
+							<input type="text" id="email" name="user.email" onBlur="registerEmailCheck();" class="inputstyle2" />
 						</div>
 
 						<br>
 						<br>
 					</li>
+
+					<div class="EmailMsg" id="EmailMsg" style="display:none;color:#F00">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label class="text" for="pm" id="emailCheck">
+							邮箱格式有误，请重新输入！
+						</label>
+					</div>
 
 					<div id="msgRegist" align="center" style="color: red;"></div>
 					<li>
