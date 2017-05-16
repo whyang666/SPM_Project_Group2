@@ -181,7 +181,7 @@ body {
 	
 	
 	</head>
-	<div style="margin-left:90%;" ><h3>欢迎您：${session.user.userName }</h3></div>		
+	<div style="margin-left:90%;" ><h3>欢迎您：${session.user.userName}${position}</h3></div>
 	<body margin="0" id="top">
 		<div id="menu2" class="menu" style="margin-left:30%;z-index: 99999" >
 			<ul>
@@ -191,9 +191,11 @@ body {
 				<li>
 					<a href="${pageContext.request.contextPath}/findTradeInfoList.do" target="right">行业信息</a>
 				</li>
-				<li>
-					<a href="${pageContext.request.contextPath}/listDownLoad.do" target="right">下载区</a>
-				</li>
+                <c:if test="${session.user.position=='1'||session.user.position=='2'||session.user.position=='3'}">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/listDownLoad.do" target="right">下载区</a>
+                    </li>
+                </c:if>
 				<li>
 					<!-- <s:if test="#session.user.position=='学生'">
 						<a href="${pageContext.request.contextPath}/selectCourse4Student.do" target="right">学生</a>
@@ -202,8 +204,6 @@ body {
 						<a href="${pageContext.request.contextPath}/selectCourse4Teacher.do" target="right">教师</a>
 					</s:if>
 					-->
-					
-						
 						<a href="${pageContext.request.contextPath}/jsp/course/courseSelect.jsp" target="right">选课</a>
 						
 					<!--<s:else>	
@@ -214,14 +214,16 @@ body {
 				<li>
 				<!-- 	<a href="../score/2012score.html" target="right">成绩查询</a>
 					<a href="GetScoreAction.action"  target="right">成绩查询</a> -->
-					
+
 					<a href="${pageContext.request.contextPath}/jsp/course/scoreQueryList.jsp" target="right">成绩查询</a>
 				   
 				</li>
 				<!-- <li> <a href="${pageContext.request.contextPath}/uploadScoreFile.do"  target="right">成绩查询1</a></li>-->
-				<li>
-					<a href="${pageContext.request.contextPath}/jsp/message/mainMessage.jsp" target="right">留言板</a>
-				</li>
+                <c:if test="${session.user.position=='1'||session.user.position=='2'||session.user.position=='3'}">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/jsp/message/mainMessage.jsp" target="right">留言板</a>
+                    </li>
+                </c:if>
 				<li>
 					<a href="${pageContext.request.contextPath}/listExam.do" target="right">网上测试</a>
 				</li>
@@ -229,7 +231,7 @@ body {
 					<a href="${pageContext.request.contextPath}/enterintro.do?name=lianxiwomen" target="right">联系我们</a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath}/logOut.do" target="123">登录入口</a>
+					<a href="${pageContext.request.contextPath}/logOut.do" target="123">退出登录</a>
 				</li>
 				
 				<c:if test="${session.user.position=='1'}">

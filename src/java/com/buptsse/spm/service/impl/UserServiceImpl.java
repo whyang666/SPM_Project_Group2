@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Service;
 
 import com.buptsse.spm.dao.IUserDao;
@@ -35,10 +37,10 @@ public class UserServiceImpl implements IUserService {
 	 * @see com.buptsse.spm.service.IUserService#findUser(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public User findUser(String userName, String password) {
+	public User findUser(String userId, String password) {
 		// TODO Auto-generated method stub
 		User user= new User();
-		user.setUserName(userName);
+		user.setUserId(userId);
 		user.setPassword(password);
 		user=iUserDao.findUser(user);
 		if(user==null || !user.getPassword().equals(password)){
@@ -48,11 +50,11 @@ public class UserServiceImpl implements IUserService {
 		}
 	}
 	
-	public User findUser(String userName){
+	public User findUser(String userId){
 		User user = new User();
-		user.setUserName(userName);
-		user.setId(userName);
-		user = iUserDao.findUser(user);
+//		user.setUserName(userName);
+		user.setId(userId);
+		user = iUserDao.findUserById(userId);
 		if(user == null){
 			return null;
 		}else{
@@ -87,8 +89,15 @@ public class UserServiceImpl implements IUserService {
 		// TODO Auto-generated method stub
 		User user = new User();
 		user= iUserDao.findUserById(id);
-		
-		return iUserDao.deleteUser(user);
+		//获取当前用户
+		User test=new User();
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		test =(User) session.getAttribute("user");
+		String sid=test.getId();
+
+		if(sid.equals(id)) return false;//选中自己不能删除
+		else{
+			return iUserDao.deleteUser(user);}
 	}
 
 	/* (non-Javadoc)

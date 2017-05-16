@@ -1,8 +1,8 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ include file="/common/taglibs.jsp"%>
-<% 
+<%
 //----------------------------------------------------------------
- //Project: SPM System (Client SubSystem) 
+ //Project: SPM System (Client SubSystem)
 // JSP Name  : footer.jsp 
 // PURPOSE : 右边页面显示
 // HISTORY：
@@ -35,8 +35,8 @@
 			<tr>
 				<td colspan="2">
 					<div id="fade_focus" style="margin-right: 40px">
-						<div class="loading"> 
-							Loading... 
+						<div class="loading">
+							Loading...
 							<br />
 							<!--  <img src="/UploadPic/2009-3/200932411630437.gif" width="100"
 								height="100" />
@@ -83,8 +83,8 @@
 										<a href="${ctx}/findTradeInfo.do?idTradeInfo=${tradeinfo.idTradeInfo}">
 											${tradeinfo.title } </a>
 									</p>
-								</s:iterator>								
-								
+								</s:iterator>
+
 								<br />
 								<br />
 								<br />
