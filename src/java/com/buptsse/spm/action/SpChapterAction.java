@@ -82,7 +82,7 @@ public class SpChapterAction extends ActionSupport{
 			Object[] spchapter = (Object[])spChapterList.get(i);
 			
 			int sumValueTotal=0;
-			int k=0;
+			int k=1;
 			List<Schedule> scheduleListtmp = scheduleService.findScheduleByUserIdAndChapterId(Integer.parseInt(spchapter[0].toString()), user.getUserId());
 			for(Schedule schedule:scheduleListtmp){
 				sumValueTotal+=schedule.getPercent();
