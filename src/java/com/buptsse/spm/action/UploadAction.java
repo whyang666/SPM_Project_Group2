@@ -79,6 +79,8 @@ public class UploadAction extends ActionSupport{
 	 * @throws IOException
 	 */
 	public String uploadFile() throws FileNotFoundException, IOException {
+		System.err.println("CNMWHY");
+		//System.exit(23);
 		String msg = "";
 		try {
 			InputStream in = new FileInputStream(file.get(0));
@@ -116,6 +118,8 @@ public class UploadAction extends ActionSupport{
 			LOG.info(fileWholeLocation);
 
 			File file = new File(fileWholeLocation);
+			File destFile  = new File("D:\\upload", fileName);
+			FileUtils.copyFile(uploadFile, destFile);
 		//	String[][] result = getData(file, 1);
 
 			in.close();

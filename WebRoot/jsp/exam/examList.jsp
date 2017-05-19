@@ -41,7 +41,7 @@
 		<form action="${ctx}/jsp/exam/generateExam.jsp" method="post">
 			<input type="submit" class="btn btn-default" value="新建测试题">
 		</form>
-       <form action="" method="post" enctype="multipart/form-data">
+       <form action="uploadExam.do" method="post" enctype="multipart/form-data">
            file:<input type="file" name="file">
            <input type="submit" class="btn btn-default" value="上传试题"/>
        </form>
