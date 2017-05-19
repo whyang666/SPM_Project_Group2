@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,16 +32,31 @@ public class ExamAction extends ActionSupport{
 	public List examList = new ArrayList();
 	public Exam exam;
 	public String examName;
-	public String number;	
+	public String number;
 	String[] result=new String[10];
 	int rightNumber=0 ;
 	int score=0;
 
 
 	/**
-	 * 根据上传的Jsom文件解析题目
+	 * 根据上传的Json件解析题目
+	 *
 	 */
 
+
+	private File file;
+	private String fileName;
+	private String fileType;
+	/**
+	 * Upload exam file
+	 * @author WHY
+	 */
+	public String uploadExamFile(){
+
+
+
+	    return SUCCESS;
+    }
 
 	/**
 	 * 查询所有网上测试列表

@@ -23,8 +23,9 @@
 	<constant name="struts.custom.i18n.resources" value="globalMessages" />
 	 -->
 	<!-- <include file="classpath:struts/struts-login.xml"></include> -->
-	
 
+    <!--设置默认上传路径-->
+	<constant name="struts.multipart.saveDir" value="/upload"/>
     <include file="struts/struts-common.xml"/>
 	
 

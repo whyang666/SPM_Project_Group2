@@ -1,13 +1,24 @@
 package com.buptsse.spm.action;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.buptsse.spm.domain.Course;
+import com.buptsse.spm.service.ISelectCourseService;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.Resource;
+import java.io.*;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -15,25 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.struts2.ServletActionContext;
-
-import com.buptsse.spm.domain.Course;
-import com.buptsse.spm.service.ISelectCourseService;
-import com.opensymphony.xwork2.ActionSupport;
 
 
 
@@ -46,6 +38,7 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class UploadAction extends ActionSupport{
 
+	private static Logger LOG = LoggerFactory.getLogger(UploadAction.class);
 	// 上传文件存放路径
 	private final static String UPLOADDIR = "/upload";
 	// 上传文件集合
@@ -56,9 +49,28 @@ public class UploadAction extends ActionSupport{
 	private List<String> fileContentType;
 
 	@Resource
-	private ISelectCourseService selectCourseService;	
-	
+	private ISelectCourseService selectCourseService;
 
+
+	/**
+	 *
+	 * @return
+	 */
+	public String uploadFileTest() throws IOException {
+		String realpath = ServletActionContext.getServletContext().getRealPath("/whyangupload");
+		//System.exit(0);
+		LOG.error("userID:");
+		LOG.error("realpath:！！！！！！！！！！！！？？？？？？？？？？？？？？ "+realpath);
+		if (file != null) {
+			File savefile = new File(new File("F:/logs/S2316S411H436/whyangupload"), fileFileName.get(0));
+			if (!savefile.getParentFile().exists())
+				savefile.getParentFile().mkdirs();
+			FileUtils.copyFile(file.get(0), savefile);
+			ActionContext.getContext().put("message", "文件上传成功");
+		}
+
+		return SUCCESS;
+	}
 
 	/**
 	 * 上传文件
@@ -69,37 +81,42 @@ public class UploadAction extends ActionSupport{
 	public String uploadFile() throws FileNotFoundException, IOException {
 		String msg = "";
 		try {
-			
 			InputStream in = new FileInputStream(file.get(0));
 			String dir = ServletActionContext.getRequest().getRealPath(
 					UPLOADDIR);
-			System.out.println(dir);
+			LOG.error("userID:");
+			LOG.info("readPath: " + dir);
 
 			File fileLocation = new File(dir);
 			// 此处也可以在应用根目录手动建立目标上传目录
 			if (!fileLocation.exists()) {
 				boolean isCreated = fileLocation.mkdir();
 				if (!isCreated) {
+					LOG.error("userID:");
+					LOG.info("目录创建失败");
 					// 目标上传目录创建失败,可做其他处理,例如抛出自定义异常等,一般应该不会出现这种情况。
 					return "error";
 				}
+				LOG.error("userID:");
+				LOG.info("目录创建成功");
 			}
-
+			LOG.error("userID:");
 			String fileName = this.getFileFileName().get(0);
 			File uploadFile = new File(dir, fileName);
 			OutputStream out = new FileOutputStream(uploadFile);
 			byte[] buffer = new byte[1024 * 1024];
 			int length;
 			while ((length = in.read(buffer)) > 0) {
+				LOG.info("read buffer");
 				out.write(buffer, 0, length);
 			}
 
 			// 文件地点
 			String fileWholeLocation = dir + "\\" + fileName;
-			System.out.println(fileWholeLocation);
+			LOG.info(fileWholeLocation);
 
 			File file = new File(fileWholeLocation);
-			String[][] result = getData(file, 1);
+		//	String[][] result = getData(file, 1);
 
 			in.close();
 			out.close();
@@ -440,7 +457,7 @@ public class UploadAction extends ActionSupport{
 		this.fileContentType = fileContentType;
 	}
 
-/*	public String execute() throws Exception {
+	/*	public String execute() throws Exception {
 		uploadFile(0);
 		return "success";
 	}

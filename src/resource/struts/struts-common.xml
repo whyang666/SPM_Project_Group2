@@ -109,11 +109,17 @@
 		<action name="listExam" method="findExamList" class="examAction">
 			<result name="success">/jsp/exam/examList.jsp</result>
 			<result name="error">error/error.jsp</result>
-		</action>			
+		</action>
+
+		<!--上传测试题-->
+		<action name="uploadExam" method="uploadFile" class="uploadAction">
+			<result name="success">success.jsp</result>
+			<result name="error">error/error.jsp</result>
+		</action>
 		
 		 <!-- 增加测试题-->
 		<action name="addQuestion" method="addQuestion" class="examAction">
-			<result name="success"></result>
+			<result name="success">/jsp/success.jsp</result>
 			<result name="error">error/error.jsp</result>
 		</action>		
 		
