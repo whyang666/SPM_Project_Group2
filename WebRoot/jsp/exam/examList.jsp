@@ -36,11 +36,15 @@
 
 	<h1 style="font-size: 28px;color: #00a1f1;border-bottom: 1px solid #b6d9e8;line-height: 50px;word-break:break-all;">
 	   网上测试
-   </h1>  
-   <c:if test="${session.user.position=='2' }">
+    </h1>
+    <c:if test="${sessionScope.user.position=='2' }">
 		<form action="${ctx}/jsp/exam/generateExam.jsp" method="post">
 			<input type="submit" class="btn btn-default" value="新建测试题">
-		</form>	
+		</form>
+       <form action="uploadExam.do" method="post" enctype="multipart/form-data">
+           file:<input type="file" name="file">
+           <input type="submit" class="btn btn-default" value="上传试题"/>
+       </form>
 	</c:if>
 	<h2>
 		在线测试题列表

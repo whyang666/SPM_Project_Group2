@@ -1,40 +1,33 @@
 package com.buptsse.spm.action;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.buptsse.spm.domain.Course;
+import com.buptsse.spm.domain.Exam;
+import com.buptsse.spm.service.IExamService;
+import com.buptsse.spm.service.ISelectCourseService;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.buptsse.spm.domain.Course;
-import com.buptsse.spm.service.ISelectCourseService;
-import com.opensymphony.xwork2.ActionSupport;
-
+import javax.annotation.Resource;
+import java.io.*;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -46,6 +39,7 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class UploadAction extends ActionSupport{
 
+	private static Logger LOG = LoggerFactory.getLogger(UploadAction.class);
 	// 上传文件存放路径
 	private final static String UPLOADDIR = "/upload";
 	// 上传文件集合
@@ -56,9 +50,31 @@ public class UploadAction extends ActionSupport{
 	private List<String> fileContentType;
 
 	@Resource
-	private ISelectCourseService selectCourseService;	
-	
+	private ISelectCourseService selectCourseService;
 
+	@Resource
+	private IExamService examService;
+
+
+	/**
+	 *
+	 * @return
+	 */
+	public String uploadFileTest() throws IOException {
+		String realpath = ServletActionContext.getServletContext().getRealPath("/whyangupload");
+		//System.exit(0);
+		LOG.error("userID:");
+		LOG.error("realpath:！！！！！！！！！！！！？？？？？？？？？？？？？？ "+realpath);
+		if (file != null) {
+			File savefile = new File(new File("F:/logs/S2316S411H436/whyangupload"), fileFileName.get(0));
+			if (!savefile.getParentFile().exists())
+				savefile.getParentFile().mkdirs();
+			FileUtils.copyFile(file.get(0), savefile);
+			ActionContext.getContext().put("message", "文件上传成功");
+		}
+
+		return SUCCESS;
+	}
 
 	/**
 	 * 上传文件
@@ -67,38 +83,41 @@ public class UploadAction extends ActionSupport{
 	 * @throws IOException
 	 */
 	public String uploadFile() throws FileNotFoundException, IOException {
-		String msg = "";
+			String msg = "";
 		try {
-			
 			InputStream in = new FileInputStream(file.get(0));
 			String dir = ServletActionContext.getRequest().getRealPath(
 					UPLOADDIR);
-			System.out.println(dir);
+			LOG.info("readPath: " + dir);
 
 			File fileLocation = new File(dir);
 			// 此处也可以在应用根目录手动建立目标上传目录
 			if (!fileLocation.exists()) {
 				boolean isCreated = fileLocation.mkdir();
 				if (!isCreated) {
+					LOG.info("目录创建失败");
 					// 目标上传目录创建失败,可做其他处理,例如抛出自定义异常等,一般应该不会出现这种情况。
 					return "error";
 				}
-			}
 
+			}
 			String fileName = this.getFileFileName().get(0);
 			File uploadFile = new File(dir, fileName);
 			OutputStream out = new FileOutputStream(uploadFile);
 			byte[] buffer = new byte[1024 * 1024];
 			int length;
 			while ((length = in.read(buffer)) > 0) {
+				LOG.info("read buffer");
 				out.write(buffer, 0, length);
 			}
 
 			// 文件地点
 			String fileWholeLocation = dir + "\\" + fileName;
-			System.out.println(fileWholeLocation);
+			LOG.info(fileWholeLocation);
 
 			File file = new File(fileWholeLocation);
+			//File destFile  = new File("D:\\upload", fileName);
+			//FileUtils.copyFile(uploadFile, destFile);
 			String[][] result = getData(file, 1);
 
 			in.close();
@@ -116,7 +135,90 @@ public class UploadAction extends ActionSupport{
 		return null;
 	}
 
-	
+
+	public String uploadExamFile() throws FileNotFoundException, IOException {
+		String msg = "";
+
+		try {
+			InputStream in = new FileInputStream(file.get(0));
+			if(!this.getFileContentType().get(0).equals("text/xml")){
+				System.out.println("文件格式错误");
+				msg="上传文件格式错误，请刷新后重试！";
+				ServletActionContext.getResponse().getWriter().write(msg);
+				return null;
+			}
+			String dir = ServletActionContext.getRequest().getRealPath(
+					"/examUpload");
+			LOG.error("readPath: " + dir);
+			System.err.println(this.getFileContentType().get(0));
+			File fileLocation = new File(dir);
+			// 此处也可以在应用根目录手动建立目标上传目录
+			if (!fileLocation.exists()) {
+				boolean isCreated = fileLocation.mkdir();
+				if (!isCreated) {
+					LOG.info("目录创建失败");
+					// 目标上传目录创建失败,可做其他处理,例如抛出自定义异常等,一般应该不会出现这种情况。
+					return "error";
+				}
+			}
+			String fileName = this.getFileFileName().get(0);
+			File uploadFile = new File(dir, fileName);
+			OutputStream out = new FileOutputStream(uploadFile);
+			byte[] buffer = new byte[1024 * 1024];
+			int length;
+			while ((length = in.read(buffer)) > 0) {
+				LOG.info("read buffer");
+				out.write(buffer, 0, length);
+			}
+
+			// 文件地点
+			String fileWholeLocation = dir + "\\" + fileName;
+			LOG.info(fileWholeLocation);
+
+			File file = new File(fileWholeLocation);
+			//String[][] result = getData(file, 1);
+
+			//文件解读
+			parseExam(file);
+			in.close();
+			out.close();
+			msg = "文件上传成功！";
+
+		} catch (Exception ex) {
+			msg = "文件上传失败，请联系管理员！";
+			System.out.println("上传失败!");
+			ex.printStackTrace();
+		}
+
+		ServletActionContext.getResponse().getWriter().write(msg);
+
+		return null;
+	}
+
+	public void parseExam(File file) throws Exception{
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(file);
+			Element root = document.getRootElement();
+			Element testElement = root.element("test");
+			String test = testElement.getText();
+			System.out.println("ExamName: " + test);
+			List questionNodes = root.elements("question");
+
+			for (Iterator it = questionNodes.iterator(); it.hasNext();) {
+				Exam exam = new Exam();
+				Element question = (Element) it.next();
+				exam.setExamName(test);
+				exam.setQuestion(question.element("title").getText());
+				exam.setNumber(examService.findExamMaxId(test)+1);
+				exam.setAnswerRight(question.attributeValue("answer"));
+				exam.setAnswerA(question.element("a").getText());
+				exam.setAnswerB(question.element("b").getText());
+				exam.setAnswerC(question.element("c").getText());
+				exam.setAnswerD(question.element("d").getText());
+				examService.insertExam(exam);
+			}
+	}
+
 	
 	/**
 	 * 上传成绩单
@@ -440,10 +542,18 @@ public class UploadAction extends ActionSupport{
 		this.fileContentType = fileContentType;
 	}
 
-/*	public String execute() throws Exception {
+	/*	public String execute() throws Exception {
 		uploadFile(0);
 		return "success";
 	}
 */
-		
+
+
+	public IExamService getExamService() {
+		return examService;
+	}
+
+	public void setExamService(IExamService examService) {
+		this.examService = examService;
+	}
 }
