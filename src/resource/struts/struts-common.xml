@@ -112,7 +112,7 @@
 		</action>
 
 		<!--上传测试题-->
-		<action name="uploadExam" method="uploadFile" class="uploadAction">
+		<action name="uploadExam" method="uploadExamFile" class="uploadAction">
 			<result name="success">success.jsp</result>
 			<result name="error">error/error.jsp</result>
 		</action>

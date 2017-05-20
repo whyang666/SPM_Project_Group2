@@ -79,14 +79,11 @@ public class UploadAction extends ActionSupport{
 	 * @throws IOException
 	 */
 	public String uploadFile() throws FileNotFoundException, IOException {
-		System.err.println("CNMWHY");
-		//System.exit(23);
-		String msg = "";
+			String msg = "";
 		try {
 			InputStream in = new FileInputStream(file.get(0));
 			String dir = ServletActionContext.getRequest().getRealPath(
 					UPLOADDIR);
-			LOG.error("userID:");
 			LOG.info("readPath: " + dir);
 
 			File fileLocation = new File(dir);
@@ -94,15 +91,12 @@ public class UploadAction extends ActionSupport{
 			if (!fileLocation.exists()) {
 				boolean isCreated = fileLocation.mkdir();
 				if (!isCreated) {
-					LOG.error("userID:");
 					LOG.info("目录创建失败");
 					// 目标上传目录创建失败,可做其他处理,例如抛出自定义异常等,一般应该不会出现这种情况。
 					return "error";
 				}
-				LOG.error("userID:");
-				LOG.info("目录创建成功");
+
 			}
-			LOG.error("userID:");
 			String fileName = this.getFileFileName().get(0);
 			File uploadFile = new File(dir, fileName);
 			OutputStream out = new FileOutputStream(uploadFile);
@@ -118,9 +112,9 @@ public class UploadAction extends ActionSupport{
 			LOG.info(fileWholeLocation);
 
 			File file = new File(fileWholeLocation);
-			File destFile  = new File("D:\\upload", fileName);
-			FileUtils.copyFile(uploadFile, destFile);
-		//	String[][] result = getData(file, 1);
+			//File destFile  = new File("D:\\upload", fileName);
+			//FileUtils.copyFile(uploadFile, destFile);
+			String[][] result = getData(file, 1);
 
 			in.close();
 			out.close();
@@ -137,7 +131,66 @@ public class UploadAction extends ActionSupport{
 		return null;
 	}
 
-	
+
+	public String uploadExamFile() throws FileNotFoundException, IOException {
+		String msg = "";
+
+		try {
+			InputStream in = new FileInputStream(file.get(0));
+			if(!this.getFileContentType().get(0).equals("text/xml")){
+				System.out.println("文件格式错误");
+				msg="上传文件格式错误，请刷新后重试！";
+				ServletActionContext.getResponse().getWriter().write(msg);
+				return null;
+			}
+			String dir = ServletActionContext.getRequest().getRealPath(
+					"/examUpload");
+			LOG.error("readPath: " + dir);
+			//System.out.println("2333333333333333333333333333333333");
+			System.err.println(this.getFileContentType().get(0));
+			File fileLocation = new File(dir);
+			// 此处也可以在应用根目录手动建立目标上传目录
+			if (!fileLocation.exists()) {
+				boolean isCreated = fileLocation.mkdir();
+				if (!isCreated) {
+					LOG.info("目录创建失败");
+					// 目标上传目录创建失败,可做其他处理,例如抛出自定义异常等,一般应该不会出现这种情况。
+					return "error";
+				}
+
+			}
+			String fileName = this.getFileFileName().get(0);
+			System.err.println(this.getFileContentType().get(0));
+			File uploadFile = new File(dir, fileName);
+			OutputStream out = new FileOutputStream(uploadFile);
+			byte[] buffer = new byte[1024 * 1024];
+			int length;
+			while ((length = in.read(buffer)) > 0) {
+				LOG.info("read buffer");
+				out.write(buffer, 0, length);
+			}
+
+			// 文件地点
+			String fileWholeLocation = dir + "\\" + fileName;
+			LOG.info(fileWholeLocation);
+
+			File file = new File(fileWholeLocation);
+			//String[][] result = getData(file, 1);
+
+			in.close();
+			out.close();
+			msg = "文件上传成功！";
+
+		} catch (Exception ex) {
+			msg = "文件上传失败，请联系管理员！";
+			System.out.println("上传失败!");
+			ex.printStackTrace();
+		}
+
+		ServletActionContext.getResponse().getWriter().write(msg);
+
+		return null;
+	}
 	
 	/**
 	 * 上传成绩单
