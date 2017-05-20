@@ -1,6 +1,8 @@
 package com.buptsse.spm.action;
 
 import com.buptsse.spm.domain.Course;
+import com.buptsse.spm.domain.Exam;
+import com.buptsse.spm.service.IExamService;
 import com.buptsse.spm.service.ISelectCourseService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -14,6 +16,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,11 +27,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
+import java.util.*;
 
 
 /**
@@ -50,6 +51,9 @@ public class UploadAction extends ActionSupport{
 
 	@Resource
 	private ISelectCourseService selectCourseService;
+
+	@Resource
+	private IExamService examService;
 
 
 	/**
@@ -146,7 +150,6 @@ public class UploadAction extends ActionSupport{
 			String dir = ServletActionContext.getRequest().getRealPath(
 					"/examUpload");
 			LOG.error("readPath: " + dir);
-			//System.out.println("2333333333333333333333333333333333");
 			System.err.println(this.getFileContentType().get(0));
 			File fileLocation = new File(dir);
 			// 此处也可以在应用根目录手动建立目标上传目录
@@ -157,10 +160,8 @@ public class UploadAction extends ActionSupport{
 					// 目标上传目录创建失败,可做其他处理,例如抛出自定义异常等,一般应该不会出现这种情况。
 					return "error";
 				}
-
 			}
 			String fileName = this.getFileFileName().get(0);
-			System.err.println(this.getFileContentType().get(0));
 			File uploadFile = new File(dir, fileName);
 			OutputStream out = new FileOutputStream(uploadFile);
 			byte[] buffer = new byte[1024 * 1024];
@@ -177,6 +178,8 @@ public class UploadAction extends ActionSupport{
 			File file = new File(fileWholeLocation);
 			//String[][] result = getData(file, 1);
 
+			//文件解读
+			parseExam(file);
 			in.close();
 			out.close();
 			msg = "文件上传成功！";
@@ -191,6 +194,31 @@ public class UploadAction extends ActionSupport{
 
 		return null;
 	}
+
+	public void parseExam(File file) throws Exception{
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(file);
+			Element root = document.getRootElement();
+			Element testElement = root.element("test");
+			String test = testElement.getText();
+			System.out.println("ExamName: " + test);
+			List questionNodes = root.elements("question");
+
+			for (Iterator it = questionNodes.iterator(); it.hasNext();) {
+				Exam exam = new Exam();
+				Element question = (Element) it.next();
+				exam.setExamName(test);
+				exam.setQuestion(question.element("title").getText());
+				exam.setNumber(examService.findExamMaxId(test)+1);
+				exam.setAnswerRight(question.attributeValue("answer"));
+				exam.setAnswerA(question.element("a").getText());
+				exam.setAnswerB(question.element("b").getText());
+				exam.setAnswerC(question.element("c").getText());
+				exam.setAnswerD(question.element("d").getText());
+				examService.insertExam(exam);
+			}
+	}
+
 	
 	/**
 	 * 上传成绩单
@@ -519,5 +547,13 @@ public class UploadAction extends ActionSupport{
 		return "success";
 	}
 */
-		
+
+
+	public IExamService getExamService() {
+		return examService;
+	}
+
+	public void setExamService(IExamService examService) {
+		this.examService = examService;
+	}
 }

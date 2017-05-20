@@ -1,0 +1,28 @@
+<exam>
+<test>高远保研测试题</test>
+
+<question answer="a">
+<title>第一题</title>
+<a>AAAAA</a>
+<b>BBBBB</b>
+<c>CCCCC</c>
+<d>DDDDD</d>
+</question>
+
+<question answer="b">
+<title>第二题</title>
+<a>？？？？？？</a>
+<b>！！！！！</b>
+<c>#######</c>
+<d>%%%%%%%</d>
+</question>
+
+<question answer="c">
+<title>第三题</title>
+<a>喵喵喵</a>
+<b>哞哞哞</b>
+<c>汪汪汪</c>
+<d>嘎嘎嘎</d>
+</question>
+
+</exam>
