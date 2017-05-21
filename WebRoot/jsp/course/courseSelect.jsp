@@ -34,10 +34,11 @@
                 queryParams: {stdId: $('#studentId').val()},
                 onLoadSuccess: function (data) {
                     //alert(data.total);
-                    if (data.total > 0) {
-                        $('#selectButton')[0].style.display = "none";
-
-                    }
+//                    if (data.total > 0) {
+//                        $('#selectButton')[0].style.display = "none";
+//
+//                    }
+                    //设置一个学生可以添加多个课程，避免button的屏蔽
                 }
 
             });
@@ -162,17 +163,14 @@
 </h1>
 
 <form id="ff" method="post" style="position: relative">
-    <c:if test="${session.user.position=='3' }">
-        <input type="button" id="selectButton" class="btn btn-default" style="margin-right:20px;"
-               onclick="selectCourse()" value="我要选课1"/>
-    </c:if>
+
     <c:if test="${session.user.position=='1' }">
         您作为管理员，无该功能权限！
     </c:if>
 
     <c:if test="${session.user.position=='3' }">
         <input type="button" id="selectButton" class="btn btn-default" style="margin-right:20px;"
-               onclick="selectCourse()" value="我要选课2"/>
+               onclick="selectCourse()" value="我要选课"/>
     </c:if>
     <c:if test="${session.user.position=='2' }">
         <table style="background:#efefef; border-collapse:collapse ;" width="100%" height="80" cellspacing="5"

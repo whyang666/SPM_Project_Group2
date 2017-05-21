@@ -205,8 +205,9 @@
 							<tr>
 								<td>
 									<div style="padding-left: 0px; margin-top: 20px;">
-										<input type="button" onclick="login()" value="立即登录" style="width: 120px;"
+										<input type="submit" onclick="login()" value="立即登录" style="width: 120px;"
 											   class="button_blue" />
+										<%--更改默认的回车为使用账号登录而不是游客登录--%>
 									</div>
 
 								</td>
