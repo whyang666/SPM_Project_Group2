@@ -36,6 +36,7 @@ public class RegisterAction extends ActionSupport {
 	@Resource
 	private ICodeService codeService;	
 
+
 	protected String userid="";
 	protected String userName="";
 	protected String position="";
@@ -79,7 +80,8 @@ public class RegisterAction extends ActionSupport {
 				user.setId(user.getUserId());
 				user.setPosition("3");
 				userService.addUser(user);
-				msg = "恭喜您，注册成功！";
+				userService.addUserWithVideo(user);
+;				msg = "恭喜您，注册成功！";
 				LOG.error("保存数据");
 			}else{
 				msg = "对不起，两次输入的密码不一致，请重新输入！";

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="spm@hy-wang.com">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.1">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
     <root id="1"/>
     <schema id="2" parent="1" name="spm">
       <Current>1</Current>
@@ -47,7 +47,6 @@
       <DataType>varchar(10000)|0</DataType>
     </column>
     <key id="32" parent="15" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>idcourseinfo</ColNames>
       <Primary>1</Primary>
     </key>
@@ -78,7 +77,6 @@
       <DataType>varchar(200)|0</DataType>
     </column>
     <key id="39" parent="16" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -112,7 +110,6 @@
       <DataType>varchar(255)|0</DataType>
     </column>
     <key id="47" parent="17" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -176,7 +173,6 @@
       <DataType>char(4)|0</DataType>
     </column>
     <key id="60" parent="18" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>studentId
 classId</ColNames>
       <Primary>1</Primary>
@@ -202,7 +198,6 @@ classId</ColNames>
       <NotNull>1</NotNull>
     </column>
     <key id="65" parent="19" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -242,7 +237,6 @@ classId</ColNames>
       <DataType>varchar(2)|0</DataType>
     </column>
     <key id="74" parent="20" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>examName
 number</ColNames>
       <Primary>1</Primary>
@@ -262,7 +256,6 @@ number</ColNames>
       <DataType>varchar(100)|0</DataType>
     </column>
     <key id="78" parent="21" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>idfile</ColNames>
       <Primary>1</Primary>
     </key>
@@ -285,7 +278,6 @@ number</ColNames>
       <DataType>varchar(800)|0</DataType>
     </column>
     <key id="83" parent="22" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -309,7 +301,6 @@ number</ColNames>
       <NotNull>1</NotNull>
     </column>
     <key id="88" parent="23" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>userId
 chapter_id
 video_step_order</ColNames>
@@ -347,7 +338,6 @@ video_step_order</ColNames>
       <DataType>varchar(256)|0</DataType>
     </column>
     <key id="95" parent="24" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>chapter_id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -399,7 +389,6 @@ video_step_order</ColNames>
       <DataType>int(32)|0</DataType>
     </column>
     <key id="105" parent="25" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -438,7 +427,6 @@ video_step_order</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="114" parent="26" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -465,7 +453,6 @@ video_step_order</ColNames>
       <DataType>varchar(2000)|0</DataType>
     </column>
     <key id="120" parent="27" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>idtradeinfo</ColNames>
       <Primary>1</Primary>
     </key>
@@ -504,7 +491,6 @@ video_step_order</ColNames>
       <NotNull>1</NotNull>
     </column>
     <key id="128" parent="28" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>

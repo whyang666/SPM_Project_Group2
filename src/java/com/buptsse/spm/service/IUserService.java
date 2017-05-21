@@ -23,6 +23,7 @@ public interface IUserService {
 	public List<User> searchUser(String choose);
 	public boolean deleteUser(String id);
 	public boolean addUser(User user);
+	public boolean addUserWithVideo(User user);
 	public boolean updateUser(User user);	
 	public List findPage(Map param,Integer page,Integer rows);
 	public Long count(Map param );
