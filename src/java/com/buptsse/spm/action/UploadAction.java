@@ -2,7 +2,9 @@ package com.buptsse.spm.action;
 
 import com.buptsse.spm.domain.Course;
 import com.buptsse.spm.domain.Exam;
+import com.buptsse.spm.domain.User;
 import com.buptsse.spm.service.IExamService;
+import com.buptsse.spm.service.IUserService;
 import com.buptsse.spm.service.ISelectCourseService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -54,6 +56,58 @@ public class UploadAction extends ActionSupport{
 
 	@Resource
 	private IExamService examService;
+	@Resource
+	private IUserService userService;
+	/**
+	 * 学生信息导入
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public String insertUserInfo() throws FileNotFoundException, IOException {
+		String msg = "";
+
+		try {
+			//判断文件类型
+			String[][] scoreList = getData(file.get(0),1);
+
+			int rowNum=scoreList.length;
+			User newu;
+			if(rowNum>0){
+				for(int i=0;i<rowNum;++i){
+					newu=new User();
+					newu.setId(scoreList[i][0]);
+					newu.setPassword(scoreList[i][2]);
+					newu.setUserName(scoreList[i][1]);
+					newu.setPosition(scoreList[i][3]);
+					newu.setUserId(scoreList[i][4]);
+
+
+					if("".equals(newu.getUserId())){
+						msg = "学生信息上传失败，表格中学生id不能为空！";
+						break;
+					}else{
+						//selectCourseService.saveOrUpdate(course);
+						userService.addUser(newu);
+						msg = "学生信息导入成功！";
+					}
+				}
+			}else{
+				msg = "无学生数据，请重新选择文件！";
+			}
+
+
+		} catch (Exception ex) {
+			msg = "学生信息导入失败，请重新选择文件";
+			System.out.println("学生信息导入失败失败!");
+			ex.printStackTrace();
+		}
+
+		ServletActionContext.getResponse().getWriter().write(msg);
+
+		return null;
+	}
+
 
 
 	/**
@@ -517,7 +571,13 @@ public class UploadAction extends ActionSupport{
 	public void setSelectCourseService(ISelectCourseService selectCourseService) {
 		this.selectCourseService = selectCourseService;
 	}
+	public IUserService getUserService() {
+		return userService;
+	}
 
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
+	}
 	public List<File> getFile() {
 		return file;
 	}
