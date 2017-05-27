@@ -81,6 +81,7 @@ public class UploadAction extends ActionSupport{
 					newu.setUserName(scoreList[i][1]);
 					newu.setPosition(scoreList[i][3]);
 					newu.setUserId(scoreList[i][4]);
+					newu.setEmail(scoreList[i][5]);
 
 
 					if("".equals(newu.getUserId())){

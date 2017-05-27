@@ -138,9 +138,9 @@
 	<table style="background:#efefef; border-collapse:collapse ;"   width="100%" height="80" cellspacing="5" cellpadding="5">
 		<tr>
 			<td width="15%" align="right" ><label for="userid" >学号或工号:</label> </td>
-			<td width="15%"><input class="easyui-textbox" type="text" id="classId" /> </td>
+			<td width="15%"><input class="easyui-textbox" type="text" id="userid" /> </td>
 			<td width="15%" align="right"><label for="userName">用户名:</label> </td>
-			<td width="15%"><input class="easyui-textbox" type="text" id="studentId"  /></td>
+			<td width="15%"><input class="easyui-textbox" type="text" id="userName"  /></td>
 			<td width="15%" align="right"> <label for="position">身份:</label> </td>
 			<td width="25%">
 				<select class="easyui-combobox" type="text" id="position"  panelHeight="100" style="width:150px;" >
@@ -214,6 +214,10 @@
 						<td>密码：</td>
 						<td><input  name="user.password" class="easyui-textbox" required="true" style="height: 30px; width: 200px;  "/></td>
 					</tr>
+                    <tr>
+                        <td>邮箱：</td>
+                        <td><input  name="user.email" class="easyui-textbox" required="true" style="height: 30px; width: 200px;  "/></td>
+                    </tr>
 					<tr>
 						<td>身份</td>
 						<td>
@@ -239,7 +243,7 @@
 				<table style="border-collapse:collapse ;"  width="600px" height="50px" cellspacing="5" cellpadding="5">
 					<tr>
 						<td  width="150px" align="right"  ><label for="fileName" >成绩文件选择:</label> </td>
-						<td   width="200px" align="left" ><input class="easyui-filebox"  id="file" name="file" buttonText="选择文件"  accept=".xlsx,.xls" style="width:300px; height: 26px"> </td>
+						<td  width="200px" align="left" ><input class="easyui-filebox"  id="file" name="file" buttonText="选择文件"  accept=".xlsx,.xls" style="width:300px; height: 26px"> </td>
 						<td width="100px"   align="left" ><a href="javascript:void(0)" class="easyui-linkbutton" onclick="uploadFile()" style="width: 100px">上  传</a> </td>
 					</tr>
 				</table>
