@@ -1,29 +1,38 @@
 package com.buptsse.spm.util;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import com.buptsse.spm.domain.Schedule;
+import com.buptsse.spm.domain.SpChapterVideo;
+import com.buptsse.spm.domain.User;
+import com.buptsse.spm.service.IScheduleService;
+import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import com.buptsse.spm.service.IUserService;
 
 /**
- * 
- * @author BUPT-TC 
+ *
+ * @author BUPT-TC
  * @date 2015年11月6日 下午10:17:41
- * @description 
- * @modify BUPT-TC 
+ * @description
+ * @modify BUPT-TC
  * @modifyDate
  */
 public class DwrUtil {
 
 	@Resource
 	private IUserService userService;
-	
+
+	@Resource
+	private IScheduleService iScheduleService;
+
 	/**
-	 * 
+	 *
 	 * @param userName 用户名
 	 * @return boolean 判定用户名是否为数字，是返回true，否则false
 	 */
@@ -36,9 +45,9 @@ public class DwrUtil {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param userName 用户名
 	 * @param passwWord 密码
 	 * @return String 状态消息，但是并没有什么用！
@@ -47,7 +56,7 @@ public class DwrUtil {
 		//需要修改
 		System.out.println("此处写用户名密码校验的方法，通过返回1，失败返回失败信息");
 		System.out.println("userName: " + userName + ", passWord: " + passwWord);
-		
+
 		if (StringUtils.isBlank(userName) || StringUtils.isBlank(passwWord)){
 			//ServletActionContext.getRequest().setAttribute("loginMsg", "账号或密码未输入！");
 			return "账号或密码未输入！";
@@ -64,12 +73,12 @@ public class DwrUtil {
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		
+
 		return "1";
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param userName 用户名
 	 * @return String 检测用户名输入是否有效：10位数字，返回相应字符串
 	 */
@@ -96,9 +105,9 @@ public class DwrUtil {
 		}
 		return "success";
 	}
-	
+
 	public String registerCheck(String registerUserName, String registerPassWord, String registerPassWord1){
-		
+
 		if (StringUtils.isBlank(registerUserName) || StringUtils.isBlank(registerPassWord) || StringUtils.isBlank(registerPassWord1)){
 			System.out.println("用户名或密码为空！");
 			return "error";
@@ -113,12 +122,23 @@ public class DwrUtil {
 					System.out.println("两次输入的密码不一致，请重新输入！");
 					return "error";
 				}
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		return "error";
 	}
-	
+
+	public String setServerProgress(int chapterId,int dataNum){
+		Map session = (Map) ActionContext.getContext().getSession();
+		User user = (User)session.get("user");
+		Schedule schedule = new Schedule();
+		schedule.setUserid(user.getId());
+		schedule.setPercent(100);
+		schedule.setVideo_step_order(dataNum);
+		schedule.setChapter_id(chapterId);
+		iScheduleService.saveOrUpdate(schedule);
+		return "success";
+	}
 }

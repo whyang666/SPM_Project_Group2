@@ -179,5 +179,10 @@ public class UserServiceImpl implements IUserService {
         return iUserDao.countUser(hql, paramList);
     }
 
+    @Override
+    public List<User> findStudents() {
+        return iUserDao.findStudents();
+    }
+
 
 }

@@ -46,7 +46,8 @@ public class CourseScheduleAction extends ActionSupport{
 	public String bofangP="";
 
 	public String bofangE="";
-	
+
+	public String bofangA="";
 	
 	/**
 	 * 视频调度处理方法，包括暂停和关闭
@@ -54,14 +55,37 @@ public class CourseScheduleAction extends ActionSupport{
 	 * @throws Exception
 	 */
 	public String pauseSchedule() throws Exception{
-		
-		String uid = "1";//先写死为第一个用户，后续需要从session中取。
+
 		
 		User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
 		
 	   Integer bofangTime=0;
 	   Integer watchCourseStep=0;		
-		
+
+	   if(bofangA!=null&&bofangA.split("\\.").length==2){
+	       String[] data = bofangA.split("\\.");
+           watchCourseStep = Integer.valueOf(data[1]);
+           List<SpChapterVideo> videoList = spChapterVideoService.findSpChapterVideoByStepOrder(watchCourseStep);
+           // 更新Schedule表数据
+           Schedule schedule = new Schedule();
+           schedule.setPercent(100);
+           schedule.setUserid(user.getUserId());
+           schedule.setVideo_step_order(watchCourseStep);
+           schedule.setChapter_id(videoList.get(0).getChapter_id());
+
+
+           scheduleService.saveOrUpdate(schedule);
+           //更新用户播放时间
+           userService.updateUser(user);
+
+           //更新session中的数据
+           ServletActionContext.getRequest().getSession().setAttribute("user", user);
+
+
+
+           return null;
+       }
+
 	    String[] names = bofangP.split("\\.");
 	    if(bofangP.compareTo("")!=0){   //  modified later******************************
 	        for (int i = 0; i < names.length; i++) {
@@ -222,6 +246,8 @@ public class CourseScheduleAction extends ActionSupport{
 		this.userService = userService;
 	}
 
-	
+	public void setFullProgress(){
+
+	}
 	
 }

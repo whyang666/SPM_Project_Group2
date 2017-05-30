@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.buptsse.spm.service.IUserService;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,9 @@ public class SpChapterAction extends ActionSupport{
 	
 	@Resource
 	private IScheduleService scheduleService;
+
+	@Resource
+	private IUserService iUserService;
 	
 	public List spChapterList = new ArrayList();
 	
@@ -62,7 +66,7 @@ public class SpChapterAction extends ActionSupport{
 	
 	public List chapterScheduleList =  new ArrayList(); ;//章节进度
 
-
+	public List studentList = new ArrayList();//学生学习进度
 
 	/**
 	 * 查找所有的视频
@@ -73,32 +77,34 @@ public class SpChapterAction extends ActionSupport{
 		
 		
 		User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		spChapterList = spChapterService.findSpChapterDetial();
-		
-		int averageTotal=0;
-		//for(SpChapter spChapter:spChapterList){
-		for(int i=0;i<spChapterList.size();i++){	
-			//SpChapter spChapter = (SpChapter)spChapterList.get(i);
-			Object[] spchapter = (Object[])spChapterList.get(i);
-			
-			int sumValueTotal=0;
-			int k=1;
-			List<Schedule> scheduleListtmp = scheduleService.findScheduleByUserIdAndChapterId(Integer.parseInt(spchapter[0].toString()), user.getUserId());
-			for(Schedule schedule:scheduleListtmp){
-				sumValueTotal+=schedule.getPercent();
-				k++;
-			}
-			averageTotal+=sumValueTotal/k;
-			//存入章节进度
-			chapterScheduleList.add(sumValueTotal/k);
-		}
-		
-		//总进度赋值
-		totalSchedule = averageTotal/17;
-		
-		
-		
-		return "success";
+		if(user.getPosition().equals("3")) {
+            spChapterList = spChapterService.findSpChapterDetial();
+
+            int averageTotal = 0;
+            //for(SpChapter spChapter:spChapterList){
+            for (int i = 0; i < spChapterList.size(); i++) {
+                //SpChapter spChapter = (SpChapter)spChapterList.get(i);
+                Object[] spchapter = (Object[]) spChapterList.get(i);
+
+                int sumValueTotal = 0;
+                int k = 1;
+                List<Schedule> scheduleListtmp = scheduleService.findScheduleByUserIdAndChapterId(Integer.parseInt(spchapter[0].toString()), user.getUserId());
+                for (Schedule schedule : scheduleListtmp) {
+                    sumValueTotal += schedule.getPercent();
+                    k++;
+                }
+                averageTotal += sumValueTotal / k;
+                //存入章节进度
+                chapterScheduleList.add(sumValueTotal / k);
+            }
+
+            //总进度赋值
+            totalSchedule = averageTotal / 17;
+            return "success";
+        }else{
+            studentList = iUserService.findStudents();
+            return "other";
+        }
 	}	
 	
 	

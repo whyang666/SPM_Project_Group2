@@ -150,8 +150,13 @@ public class UserDaoImpl extends BaseDAOImpl<User> implements IUserDao {
 	public Long countUser(String hql, List param) {
 		// TODO Auto-generated method stub
 		return super.count(hql, param);
-	}	
-	
+	}
+
+	@Override
+	public List findStudents() {
+		return super.find("from User where position=3");
+	}
+
 	@Override
 	public User findUserById(String id){
 		// TODO Auto-generated method stub
