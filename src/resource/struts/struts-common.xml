@@ -71,8 +71,13 @@
 		<action name="insertCourse" method="insertCourse" class="courseAction">
 			<result name="success"></result>
 			<result name="error">jsp/error.jsp</result>
-		</action>				
-	
+		</action>
+
+		<!-- 上传学生信息 -->
+		<action name="insertUserInfo" method="insertUserInfo" class="uploadAction">
+			<result name="success"></result>
+			<result name="error">error/error.jsp</result>
+		</action>
 	    <!-- 邮件通知 -->
 		<action name="emailNotify" method="emailNotify" class="emailAction">
 			<result name="success">jsp/course/notifySuccess.jsp</result>

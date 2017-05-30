@@ -2,7 +2,9 @@ package com.buptsse.spm.action;
 
 import com.buptsse.spm.domain.Course;
 import com.buptsse.spm.domain.Exam;
+import com.buptsse.spm.domain.User;
 import com.buptsse.spm.service.IExamService;
+import com.buptsse.spm.service.IUserService;
 import com.buptsse.spm.service.ISelectCourseService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -54,6 +56,59 @@ public class UploadAction extends ActionSupport{
 
 	@Resource
 	private IExamService examService;
+	@Resource
+	private IUserService userService;
+	/**
+	 * 学生信息导入
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public String insertUserInfo() throws FileNotFoundException, IOException {
+		String msg = "";
+
+		try {
+			//判断文件类型
+			String[][] scoreList = getData(file.get(0),1);
+
+			int rowNum=scoreList.length;
+			User newu;
+			if(rowNum>0){
+				for(int i=0;i<rowNum;++i){
+					newu=new User();
+					newu.setId(scoreList[i][0]);
+					newu.setPassword(scoreList[i][2]);
+					newu.setUserName(scoreList[i][1]);
+					newu.setPosition(scoreList[i][3]);
+					newu.setUserId(scoreList[i][4]);
+					newu.setEmail(scoreList[i][5]);
+
+
+					if("".equals(newu.getUserId())){
+						msg = "学生信息上传失败，表格中学生id不能为空！";
+						break;
+					}else{
+						//selectCourseService.saveOrUpdate(course);
+						userService.addUser(newu);
+						msg = "学生信息导入成功！";
+					}
+				}
+			}else{
+				msg = "无学生数据，请重新选择文件！";
+			}
+
+
+		} catch (Exception ex) {
+			msg = "学生信息导入失败，请重新选择文件";
+			System.out.println("学生信息导入失败失败!");
+			ex.printStackTrace();
+		}
+
+		ServletActionContext.getResponse().getWriter().write(msg);
+
+		return null;
+	}
+
 
 
 	/**
@@ -136,19 +191,24 @@ public class UploadAction extends ActionSupport{
 	}
 
 
+	/**
+	 * 上传试卷文件，限定为xml文件，
+	 * @return success
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public String uploadExamFile() throws FileNotFoundException, IOException {
-		String msg = "";
+		String msg = "";//在页面展示的提示消息
 
 		try {
 			InputStream in = new FileInputStream(file.get(0));
-			if(!this.getFileContentType().get(0).equals("text/xml")){
+			if(!this.getFileContentType().get(0).equals("text/xml")){ //判断上传文件的类型，对于非xml文件进行提示
 				System.out.println("文件格式错误");
 				msg="上传文件格式错误，请刷新后重试！";
 				ServletActionContext.getResponse().getWriter().write(msg);
 				return null;
 			}
-			String dir = ServletActionContext.getRequest().getRealPath(
-					"/examUpload");
+			String dir = ServletActionContext.getRequest().getRealPath("/examUpload");//获得当前上传路径
 			LOG.error("readPath: " + dir);
 			System.err.println(this.getFileContentType().get(0));
 			File fileLocation = new File(dir);
@@ -161,12 +221,12 @@ public class UploadAction extends ActionSupport{
 					return "error";
 				}
 			}
-			String fileName = this.getFileFileName().get(0);
-			File uploadFile = new File(dir, fileName);
+			String fileName = this.getFileFileName().get(0); //获取文件名
+			File uploadFile = new File(dir, fileName); //创建文件
 			OutputStream out = new FileOutputStream(uploadFile);
 			byte[] buffer = new byte[1024 * 1024];
 			int length;
-			while ((length = in.read(buffer)) > 0) {
+			while ((length = in.read(buffer)) > 0) { //将上传的文件从临时文件写入
 				LOG.info("read buffer");
 				out.write(buffer, 0, length);
 			}
@@ -176,7 +236,6 @@ public class UploadAction extends ActionSupport{
 			LOG.info(fileWholeLocation);
 
 			File file = new File(fileWholeLocation);
-			//String[][] result = getData(file, 1);
 
 			//文件解读
 			parseExam(file);
@@ -195,16 +254,21 @@ public class UploadAction extends ActionSupport{
 		return null;
 	}
 
+	/**
+	 * 使用dom4j解析上传的试卷，将试卷题目保存至数据库
+	 * @param file
+	 * @throws Exception
+	 */
 	public void parseExam(File file) throws Exception{
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(file);
 			Element root = document.getRootElement();
-			Element testElement = root.element("test");
+			Element testElement = root.element("test"); //获得根节点test
 			String test = testElement.getText();
 			System.out.println("ExamName: " + test);
-			List questionNodes = root.elements("question");
+			List questionNodes = root.elements("question"); //获得根节点下的每一个question元素
 
-			for (Iterator it = questionNodes.iterator(); it.hasNext();) {
+			for (Iterator it = questionNodes.iterator(); it.hasNext();) { //对每一个元素进行解析
 				Exam exam = new Exam();
 				Element question = (Element) it.next();
 				exam.setExamName(test);
@@ -215,7 +279,7 @@ public class UploadAction extends ActionSupport{
 				exam.setAnswerB(question.element("b").getText());
 				exam.setAnswerC(question.element("c").getText());
 				exam.setAnswerD(question.element("d").getText());
-				examService.insertExam(exam);
+				examService.insertExam(exam); //将问题保存至数据库
 			}
 	}
 
@@ -517,7 +581,13 @@ public class UploadAction extends ActionSupport{
 	public void setSelectCourseService(ISelectCourseService selectCourseService) {
 		this.selectCourseService = selectCourseService;
 	}
+	public IUserService getUserService() {
+		return userService;
+	}
 
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
+	}
 	public List<File> getFile() {
 		return file;
 	}

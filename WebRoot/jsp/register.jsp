@@ -205,8 +205,7 @@
 							<tr>
 								<td>
 									<div style="padding-left: 0px; margin-top: 20px;">
-										<input type="button" onclick="login()" value="立即登录" style="width: 120px;"
-											   class="button_blue" />
+										<input type="button" onclick="login()" value="立即登录" style="width: 120px;" class="button_blue" />
 									</div>
 
 								</td>
